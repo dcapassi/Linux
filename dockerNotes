@@ -1,0 +1,16 @@
+
+Adding the GP key for the docker repository:
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+Adding docker repositories to the APT sources
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+Updating the package database
+    sudo apt-get update
+
+Apt install docker
+    sudo apt install docker-ce
+
+docker run --name database -e POSTGRES_PASSWORD=[PASS] -p 5432:5432 -d postgres
+
+docker run --name mongodb -p 27017:27017 -d -t mongo
