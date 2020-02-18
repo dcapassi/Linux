@@ -54,7 +54,45 @@ Showing ip routes
     10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.15 metric 100 
     169.254.0.0/16 dev enp0s3 scope link metric 1000
 
+
+Disabling and Enabling the interface
+    devnet@devnet:~$ sudo ip link set enp0s3 down
+    devnet@devnet:~$ sudo ip link set enp0s3 up
+
+Adding a default route
+    sudo ip route add default via 10.102.66.1
+
+Configuration static Ip Address using netplan
+    Create  a netplan .yaml file
+        devnet@devnet:/etc/netplan$ sudo touch /etc/netplan/02-network-config.yaml
+    
+    Edit the file
+        network:
+    version: 2
+    renderer: NetworkManager
+    ethernets:
+       enp0s3:
+          dhcp4: no
+          addresses: [10.0.2.15/24]
+          gateway4: 10.0.2.2
+          nameservers:
+             addresses: [1.1.1.1, 8.8.8.8]
+
+    Verify the netplan config
+        devnet@devnet:/etc/netplan$ sudo netplan try
+    
+
+    Restart the network-manager
+    sudo systemctl restart network-manager (Ubuntu Desktop)
+    
+    
+
+
+
+
+
 ########################################################################################################
+
 
 
 
