@@ -1,0 +1,3 @@
+git init
+git remote add origin [github_path]
+git push origin master
