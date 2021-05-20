@@ -14,3 +14,58 @@ Apt install docker
 docker run --name database -e POSTGRES_PASSWORD=[PASS] -p 5432:5432 -d postgres
 
 docker run --name mongodb -p 27017:27017 -d -t mongo
+
+
+
+Notes from the Book Kubernetes in Action
+
+#########################################################################################################
+
+Docker running a "Hello World":
+docker run busybox echo "Hello world"
+
+#########################################################################################################
+
+#Creating the file app.js
+
+"""
+const http = require('http');
+const os = require('os');
+
+
+console.log("Kubia server starting...");
+
+var handler = function(request, response) {
+  console.log("Received request from " + request.connection.remoteAddress);
+  response.writeHead(200);
+  response.end("You've hit " + os.hostname() + "\n");
+};
+
+var www = http.createServer(handler);
+www.listen(8080);
+"""
+
+#Dockerfile
+"""
+FROM node:7
+ADD app.js /app.js
+ENTRYPOINT ["node", "app.js"]
+"""
+
+#Building the image
+docker build -t kubia .
+
+#Creating the container using the 'kubia' image
+docker run --name kubia-container -p 8080:8080 -d kubia
+
+#Getting additional informational from the container:
+docker inspect kubia-container
+
+#Accessing the bash of the container
+docker exec -it kubia-container bash
+
+#Stopping and removing  a container
+docker stop kubia-container
+docker rm kubia-container
+
+
