@@ -68,4 +68,10 @@ docker exec -it kubia-container bash
 docker stop kubia-container
 docker rm kubia-container
 
+## Getting the dist from the container
+cat /etc/os-release
+
+## Check the kernel version
+
+
 
